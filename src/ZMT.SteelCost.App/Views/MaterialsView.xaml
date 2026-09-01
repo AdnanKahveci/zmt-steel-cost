@@ -1,0 +1,18 @@
+<UserControl x:Class="ZMT.SteelCost.App.Views.MaterialsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="0,0,10,20">
+        <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+        <StackPanel><TextBlock Text="{Binding Title}" FontSize="28" FontWeight="SemiBold" /><TextBlock Text="{Binding Subtitle}" Foreground="{StaticResource MutedTextBrush}" Margin="0,4,0,18" /></StackPanel>
+        <Grid Grid.Row="1" Margin="0,0,0,12"><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal"><Border Background="#E8F8F8" CornerRadius="7" Padding="12,7"><TextBlock Text="186 aktif legacy malzeme · 10 kategori" Foreground="{StaticResource PrimaryDarkBrush}" FontWeight="SemiBold" /></Border></StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal"><Button Content="Proje Fiyatlarını Sıfırla" Style="{StaticResource SecondaryButton}" Command="{Binding Owner.ResetMaterialPricesCommand}" Margin="4,0" /><Button Content="Güncel Fiyat Listesini Uygula" Style="{StaticResource PrimaryButton}" Command="{Binding Owner.UseLatestPriceListCommand}" Margin="4,0" /></StackPanel>
+        </Grid>
+        <Grid Grid.Row="2"><Grid.ColumnDefinitions><ColumnDefinition Width="180" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+            <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Kategoriler" Style="{StaticResource SectionTitle}" /><ListBox BorderThickness="0" Background="Transparent"><ListBoxItem Content="1001 · Metal Aksam" /><ListBoxItem Content="1002 · Kaplama" /><ListBoxItem Content="1003 · Çatı Sacı" /><ListBoxItem Content="1004 · Kapı/Pencere" /><ListBoxItem Content="1005 · Elektrik" /><ListBoxItem Content="1006 · Vida" /><ListBoxItem Content="1007 · Hırdavat" /><ListBoxItem Content="1008 · Sıhhi Tesisat" /><ListBoxItem Content="1009 · Çatı Oluğu" /><ListBoxItem Content="1010 · Boya/Mastik" /></ListBox></StackPanel></Border>
+            <Border Grid.Column="1" Style="{StaticResource Card}"><DataGrid ItemsSource="{Binding Owner.MaterialRows}" FrozenColumnCount="3"><DataGrid.Columns>
+                <DataGridTextColumn Header="Kod" Binding="{Binding Code}" Width="90" IsReadOnly="True" /><DataGridTextColumn Header="Grup" Binding="{Binding CategoryName}" Width="150" IsReadOnly="True" /><DataGridTextColumn Header="Malzeme" Binding="{Binding Name}" Width="250" IsReadOnly="True" /><DataGridTextColumn Header="Ölçü" Binding="{Binding Specification}" Width="110" IsReadOnly="True" /><DataGridTextColumn Header="Birim" Binding="{Binding Unit}" Width="65" IsReadOnly="True" /><DataGridTextColumn Header="Alış Fiyatı" Binding="{Binding PurchasePrice, UpdateSourceTrigger=PropertyChanged, StringFormat=N4}" Width="110" /><DataGridTextColumn Header="Pricing Rule" Binding="{Binding PricingRuleId}" Width="190" IsReadOnly="True" /><DataGridCheckBoxColumn Header="Aktif" Binding="{Binding IsActive}" Width="60" /><DataGridTemplateColumn Header="İşlem" Width="100"><DataGridTemplateColumn.CellTemplate><DataTemplate><Button Content="Uygula" Style="{StaticResource SecondaryButton}" Command="{Binding DataContext.Owner.ApplyMaterialPriceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+            </DataGrid.Columns></DataGrid></Border>
+        </Grid>
+    </Grid>
+</UserControl>

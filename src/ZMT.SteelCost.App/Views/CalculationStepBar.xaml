@@ -1,0 +1,14 @@
+<UserControl x:Class="ZMT.SteelCost.App.Views.CalculationStepBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Background="#E8EEF5" CornerRadius="8" Padding="6" Margin="0,0,0,18">
+        <StackPanel Orientation="Horizontal">
+            <Button Style="{StaticResource SecondaryButton}" Content="1  Proje" Command="{Binding Owner.NavigateCommand}" CommandParameter="ProjectInfo" Margin="2" />
+            <Button Style="{StaticResource SecondaryButton}" Content="2  Bina" Command="{Binding Owner.NavigateCommand}" CommandParameter="Building" Margin="2" />
+            <Button Style="{StaticResource SecondaryButton}" Content="3  Kaplama" Command="{Binding Owner.NavigateCommand}" CommandParameter="Cladding" Margin="2" />
+            <Button Style="{StaticResource SecondaryButton}" Content="4  Kapı / Pencere" Command="{Binding Owner.NavigateCommand}" CommandParameter="DoorWindow" Margin="2" />
+            <Button Style="{StaticResource SecondaryButton}" Content="5  Vitrifiye" Command="{Binding Owner.NavigateCommand}" CommandParameter="Fixtures" Margin="2" />
+            <Button Style="{StaticResource PrimaryButton}" Content="6  Sonuç" Command="{Binding Owner.NavigateCommand}" CommandParameter="Results" Margin="2" />
+        </StackPanel>
+    </Border>
+</UserControl>

@@ -1,0 +1,87 @@
+<Application x:Class="ZMT.SteelCost.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:ZMT.SteelCost.App.Converters"
+             xmlns:vm="clr-namespace:ZMT.SteelCost.App.ViewModels"
+             xmlns:views="clr-namespace:ZMT.SteelCost.App.Views">
+    <Application.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
+        <converters:NullToVisibilityConverter x:Key="NullToVisibility" />
+        <converters:EnumToTurkishConverter x:Key="EnumToTurkish" />
+        <converters:FloorCountToReadOnlyConverter x:Key="FloorCountToReadOnly" />
+        <converters:ZeroQuantityVisibilityConverter x:Key="ZeroQuantityVisibility" />
+        <converters:FilePathToImageSourceConverter x:Key="FilePathToImage" />
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#F3F6FA" />
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="RailBrush" Color="#0B172A" />
+        <SolidColorBrush x:Key="RailMutedBrush" Color="#91A0B8" />
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#0EA5A8" />
+        <SolidColorBrush x:Key="PrimaryDarkBrush" Color="#087A7D" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#F59E0B" />
+        <SolidColorBrush x:Key="TextBrush" Color="#172033" />
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#64748B" />
+        <SolidColorBrush x:Key="BorderBrush" Color="#DDE4EE" />
+        <SolidColorBrush x:Key="SuccessBrush" Color="#16A34A" />
+        <SolidColorBrush x:Key="DangerBrush" Color="#DC2626" />
+        <Style TargetType="Window">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+        </Style>
+        <Style TargetType="TextBlock"><Setter Property="TextWrapping" Value="Wrap" /></Style>
+        <Style TargetType="TextBox">
+            <Setter Property="MinHeight" Value="36" /><Setter Property="Padding" Value="10,6" />
+            <Setter Property="VerticalContentAlignment" Value="Center" /><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" /><Setter Property="Background" Value="White" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="MinHeight" Value="36" /><Setter Property="Padding" Value="8,4" />
+            <Setter Property="VerticalContentAlignment" Value="Center" /><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        </Style>
+        <Style TargetType="DatePicker"><Setter Property="MinHeight" Value="36" /><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" /></Style>
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White" /><Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+            <Setter Property="BorderThickness" Value="0" /><Setter Property="Padding" Value="18,10" /><Setter Property="MinHeight" Value="38" />
+            <Setter Property="Cursor" Value="Hand" /><Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+                <Border Background="{TemplateBinding Background}" CornerRadius="7" Padding="{TemplateBinding Padding}"><ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}"><Setter Property="Foreground" Value="{StaticResource TextBrush}" /><Setter Property="Background" Value="#EDF1F6" /></Style>
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}"><Setter Property="Background" Value="{StaticResource DangerBrush}" /></Style>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#D7DFEB" /><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" /><Setter Property="Padding" Value="18,12" /><Setter Property="Margin" Value="8,2" />
+            <Setter Property="FontSize" Value="14" /><Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button">
+                <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="7" Padding="{TemplateBinding Padding}"><ContentPresenter /></Border>
+                <ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Border" Property="Background" Value="#182A44" /><Setter Property="Foreground" Value="White" /></Trigger></ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="White" /><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" /><Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" /><Setter Property="Padding" Value="20" /><Setter Property="Margin" Value="0,0,14,14" />
+        </Style>
+        <Style x:Key="SectionTitle" TargetType="TextBlock"><Setter Property="FontSize" Value="18" /><Setter Property="FontWeight" Value="SemiBold" /><Setter Property="Margin" Value="0,0,0,14" /></Style>
+        <Style x:Key="FieldLabel" TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource MutedTextBrush}" /><Setter Property="FontSize" Value="12" /><Setter Property="Margin" Value="0,0,0,5" /></Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False" /><Setter Property="HeadersVisibility" Value="Column" /><Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#E8EDF3" /><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" /><Setter Property="BorderThickness" Value="1" />
+            <Setter Property="RowHeight" Value="36" /><Setter Property="ColumnHeaderHeight" Value="38" /><Setter Property="AlternatingRowBackground" Value="#F8FAFC" />
+            <Setter Property="Background" Value="White" /><Setter Property="CanUserAddRows" Value="False" />
+        </Style>
+        <DataTemplate DataType="{x:Type vm:DashboardPageViewModel}"><views:DashboardView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProjectsPageViewModel}"><views:ProjectsView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProjectInfoPageViewModel}"><views:ProjectInfoView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BuildingPageViewModel}"><views:BuildingView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CladdingPageViewModel}"><views:CladdingView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DoorWindowPageViewModel}"><views:DoorWindowView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FixturesPageViewModel}"><views:FixturesView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ResultsPageViewModel}"><views:ResultsView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MaterialsPageViewModel}"><views:MaterialsView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ReportsPageViewModel}"><views:ReportsView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:OfferEditorPageViewModel}"><views:OfferEditorView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsPageViewModel}"><views:SettingsView /></DataTemplate>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,45 @@
+<UserControl x:Class="ZMT.SteelCost.App.Views.BuildingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:ZMT.SteelCost.App.Views">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,0,10,20">
+            <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="SemiBold" /><TextBlock Text="{Binding Subtitle}" Foreground="{StaticResource MutedTextBrush}" Margin="0,4,0,18" />
+            <views:CalculationStepBar />
+            <UniformGrid Columns="3">
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Genel" Style="{StaticResource SectionTitle}" />
+                    <TextBlock Text="Bina Alanı (m²) *" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.BuildingArea, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                    <TextBlock Text="Tahmini Çelik (kg/m²) *" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.EstimatedSteelKgPerM2, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                    <TextBlock Text="Kat Adedi (1–2)" Style="{StaticResource FieldLabel}" /><ComboBox ItemsSource="{Binding FloorCounts}" SelectedItem="{Binding Owner.ActiveProject.Building.FloorCount}" Margin="0,0,0,10" />
+                    <TextBlock Text="Kat Yüksekliği (m)" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.FloorHeight, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                    <TextBlock Text="Bina Köşe Sayısı (adet)" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.CornerCount, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel></Border>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Geometri ve Profil" Style="{StaticResource SectionTitle}" />
+                    <TextBlock Text="Zemin Kat En (m)" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.GroundFloorWidth, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                    <TextBlock Text="Zemin Kat Boy (m)" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.GroundFloorLength, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                    <TextBlock Text="Ara Kat Alanı (m²)" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.IntermediateFloorArea, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+                    <TextBlock Text="Dış Duvar Kalınlığı (mm)" Style="{StaticResource FieldLabel}" /><ComboBox ItemsSource="{Binding WallThicknesses}" SelectedItem="{Binding Owner.ActiveProject.Building.ExteriorWallThicknessMm}" Margin="0,0,0,10" />
+                    <TextBlock Text="İç Duvar Kalınlığı (mm)" Style="{StaticResource FieldLabel}" /><ComboBox ItemsSource="{Binding WallThicknesses}" SelectedItem="{Binding Owner.ActiveProject.Building.InteriorWallThicknessMm}" />
+                </StackPanel></Border>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Çatı" Style="{StaticResource SectionTitle}" />
+                    <TextBlock Text="Çatı Tipi" Style="{StaticResource FieldLabel}" /><ComboBox ItemsSource="{Binding RoofTypes}" SelectedItem="{Binding Owner.ActiveProject.Building.RoofType}" Margin="0,0,0,8"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding Converter={StaticResource EnumToTurkish}}" /></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+                    <TextBlock Text="Çatı Eğimi" Style="{StaticResource FieldLabel}" /><ComboBox ItemsSource="{Binding RoofSlopes}" SelectedItem="{Binding Owner.ActiveProject.Building.RoofSlope}" Margin="0,0,0,8" />
+                    <TextBlock Text="Çatı Oturum Alanı (m²)" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.RoofFootprintArea, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,8" />
+                    <TextBlock Text="Çatı Kaplama Tipi" Style="{StaticResource FieldLabel}" /><ComboBox ItemsSource="{Binding RoofCoverTypes}" SelectedItem="{Binding Owner.ActiveProject.Building.RoofCoverType}" Margin="0,0,0,8"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding Converter={StaticResource EnumToTurkish}}" /></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+                    <TextBlock Text="Çatı Sistemi" Style="{StaticResource FieldLabel}" /><ComboBox ItemsSource="{Binding RoofSystems}" SelectedItem="{Binding Owner.ActiveProject.Building.RoofSystem}" Margin="0,0,0,8"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding Converter={StaticResource EnumToTurkish}}" /></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+                    <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,6,0"><TextBlock Text="Saçak Genişliği" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.EaveWidth}" /></StackPanel>
+                        <StackPanel Grid.Column="1" Margin="0,0,6,0"><TextBlock Text="Saçak Uzunluğu" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.EaveLength}" /></StackPanel>
+                        <StackPanel Grid.Column="2"><TextBlock Text="Alın Uzunluğu" Style="{StaticResource FieldLabel}" /><TextBox Text="{Binding Owner.ActiveProject.Building.GableLength}" /></StackPanel>
+                    </Grid>
+                </StackPanel></Border>
+            </UniformGrid>
+            <Border Style="{StaticResource Card}" Background="#10213A"><Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+                <StackPanel><TextBlock Text="Çatı Eğimi Katsayısı" Foreground="#AFC0D6" /><TextBlock Text="{Binding Owner.RoofPreview.SlopeFactor, StringFormat=N4}" FontSize="24" FontWeight="Bold" Foreground="White" /></StackPanel>
+                <StackPanel Grid.Column="1"><TextBlock Text="Saçak Alanı" Foreground="#AFC0D6" /><TextBlock Text="{Binding Owner.RoofPreview.EaveArea, StringFormat={}{0:N3} m²}" FontSize="24" FontWeight="Bold" Foreground="White" /></StackPanel>
+                <StackPanel Grid.Column="2"><TextBlock Text="Çatı Kaplama Alanı" Foreground="#AFC0D6" /><TextBlock Text="{Binding Owner.RoofPreview.RoofCoverArea, StringFormat={}{0:N3} m²}" FontSize="24" FontWeight="Bold" Foreground="#65D6D8" /></StackPanel>
+            </Grid></Border>
+            <Button Content="Kaplamaya Devam Et  →" Style="{StaticResource PrimaryButton}" Command="{Binding Owner.NavigateCommand}" CommandParameter="Cladding" HorizontalAlignment="Right" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

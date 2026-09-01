@@ -1,0 +1,35 @@
+<UserControl x:Class="ZMT.SteelCost.App.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,0,10,20">
+            <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding Subtitle}" Foreground="{StaticResource MutedTextBrush}" Margin="0,4,0,20" />
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="＋" FontSize="28" Foreground="{StaticResource PrimaryBrush}" /><TextBlock Text="Yeni Hesaplama" FontSize="17" FontWeight="SemiBold" Margin="0,8" /><TextBlock Text="Yeni bir fiyat çalışması başlatın." Foreground="{StaticResource MutedTextBrush}" /><Button Content="Başlat" Style="{StaticResource PrimaryButton}" Command="{Binding Owner.NewProjectCommand}" Margin="0,16,0,0" /></StackPanel></Border>
+                <Border Grid.Column="1" Style="{StaticResource Card}"><StackPanel><TextBlock Text="▣" FontSize="28" Foreground="{StaticResource PrimaryBrush}" /><TextBlock Text="Projeyi Aç" FontSize="17" FontWeight="SemiBold" Margin="0,8" /><TextBlock Text="Kayıtlı projelere ve snapshot'lara gidin." Foreground="{StaticResource MutedTextBrush}" /><Button Content="Projeler" Style="{StaticResource SecondaryButton}" Command="{Binding Owner.NavigateCommand}" CommandParameter="Projects" Margin="0,16,0,0" /></StackPanel></Border>
+                <Border Grid.Column="2" Style="{StaticResource Card}"><StackPanel><TextBlock Text="✓" FontSize="28" Foreground="{StaticResource SuccessBrush}" /><TextBlock Text="Parity Durumu" FontSize="17" FontWeight="SemiBold" Margin="0,8" /><TextBlock Text="186 / 186 satır · 10 / 10 grup" Foreground="{StaticResource MutedTextBrush}" /><TextBlock Text="LegacyExcel-v1" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" Margin="0,16,0,0" /></StackPanel></Border>
+            </Grid>
+            <TextBlock Text="Aktif Proje KPI" Style="{StaticResource SectionTitle}" Margin="0,10,0,14" />
+            <UniformGrid Columns="6">
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Bina Alanı" Foreground="{StaticResource MutedTextBrush}" /><TextBlock Text="{Binding Owner.ActiveProject.Building.BuildingArea, StringFormat={}{0:N2} m²}" FontSize="21" FontWeight="Bold" Margin="0,6" /></StackPanel></Border>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Tahmini Çelik" Foreground="{StaticResource MutedTextBrush}" /><TextBlock Text="{Binding Owner.Result.SteelWeight, StringFormat={}{0:N0} kg}" FontSize="21" FontWeight="Bold" Margin="0,6" /></StackPanel></Border>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Malzeme Maliyeti" Foreground="{StaticResource MutedTextBrush}" /><TextBlock Text="{Binding Owner.Result.TotalPurchaseCost, StringFormat={}{0:N2} ₺}" FontSize="21" FontWeight="Bold" Margin="0,6" /></StackPanel></Border>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Satış Tutarı" Foreground="{StaticResource MutedTextBrush}" /><TextBlock Text="{Binding Owner.Result.GrandTotal, StringFormat={}{0:N2} ₺}" FontSize="21" FontWeight="Bold" Margin="0,6" Foreground="{StaticResource PrimaryDarkBrush}" /></StackPanel></Border>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Brüt Kâr" Foreground="{StaticResource MutedTextBrush}" /><TextBlock Text="{Binding Owner.Result.GrossProfit, StringFormat={}{0:N2} ₺}" FontSize="21" FontWeight="Bold" Margin="0,6" /></StackPanel></Border>
+                <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Brüt Kâr %" Foreground="{StaticResource MutedTextBrush}" /><TextBlock Text="{Binding Owner.Result.GrossMarginRate, StringFormat=P1}" FontSize="21" FontWeight="Bold" Margin="0,6" /></StackPanel></Border>
+            </UniformGrid>
+            <TextBlock Text="Son Projeler" Style="{StaticResource SectionTitle}" Margin="0,8,0,14" />
+            <DataGrid ItemsSource="{Binding Owner.RecentProjects}" IsReadOnly="True" MinHeight="180">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Firma" Binding="{Binding Company}" Width="2*" />
+                    <DataGridTextColumn Header="Müşteri" Binding="{Binding CustomerName}" Width="2*" />
+                    <DataGridTextColumn Header="CRM No" Binding="{Binding CrmNumber}" Width="*" />
+                    <DataGridTextColumn Header="Tarih" Binding="{Binding DocumentDate, StringFormat=d}" Width="*" />
+                    <DataGridTemplateColumn Header="" Width="100"><DataGridTemplateColumn.CellTemplate><DataTemplate><Button Content="Aç" Style="{StaticResource SecondaryButton}" Command="{Binding DataContext.Owner.OpenProjectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

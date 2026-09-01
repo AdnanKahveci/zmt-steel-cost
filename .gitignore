@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+.vs/
+TestResults/
+*.user
+*.suo
+*.exe
+publish/
+*.pdb
+.env
+.env.*
+*.pfx
+*.snk
+.idea/

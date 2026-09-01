@@ -1,0 +1,16 @@
+<UserControl x:Class="ZMT.SteelCost.App.Views.FixturesView" x:Name="root"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:ZMT.SteelCost.App.Converters"
+             xmlns:views="clr-namespace:ZMT.SteelCost.App.Views">
+    <UserControl.Resources><converters:BindingProxy x:Key="DataContextProxy" Data="{Binding}" /></UserControl.Resources>
+    <StackPanel Margin="0,0,10,20">
+        <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="SemiBold" /><TextBlock Text="{Binding Subtitle}" Foreground="{StaticResource MutedTextBrush}" Margin="0,4,0,18" />
+        <views:CalculationStepBar />
+        <Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Vitrifiye Adetleri" Style="{StaticResource SectionTitle}" /><TextBlock Text="Kat adedi 1 olduğunda 1. Kat değerleri hesaplamada sıfır tutulmalıdır." Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,12" />
+            <DataGrid ItemsSource="{Binding Owner.ActiveProject.Building.Fixtures}"><DataGrid.Columns><DataGridTemplateColumn Header="Malzeme" Width="2*"><DataGridTemplateColumn.CellTemplate><DataTemplate><TextBlock Text="{Binding Type, Converter={StaticResource EnumToTurkish}}" /></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn><DataGridTextColumn Header="Zemin Kat" Binding="{Binding GroundFloorQuantity, UpdateSourceTrigger=PropertyChanged}" Width="*" /><DataGridTextColumn Header="1. Kat" Binding="{Binding FirstFloorQuantity, UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="{Binding Data.Owner.ActiveProject.Building.FloorCount, Source={StaticResource DataContextProxy}, Converter={StaticResource FloorCountToReadOnly}}" /></DataGrid.Columns></DataGrid>
+        </StackPanel></Border>
+        <Border Style="{StaticResource Card}" Background="#FFF7E6" BorderBrush="#F5D28B"><TextBlock Text="Sıhhi tesisat yardımcı katsayıları MaterialFormulaParameter tablosundan okunur; UI metinlerine veya Excel H kolonuna runtime bağımlılığı yoktur." Foreground="#825B0A" /></Border>
+        <Button Content="Hesapla ve Sonuçları Aç  →" Style="{StaticResource PrimaryButton}" Command="{Binding Owner.CalculateAndShowResultsCommand}" HorizontalAlignment="Right" />
+    </StackPanel>
+</UserControl>
